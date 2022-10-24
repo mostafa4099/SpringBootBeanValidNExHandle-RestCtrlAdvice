@@ -1,6 +1,7 @@
 package com.mostafa.service;
 
 import com.mostafa.entity.Book;
+import com.mostafa.excption.NotFoundException;
 import com.mostafa.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,10 +25,10 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public Book findBookById(long id) {
+    public Book findBookById(long id) throws NotFoundException {
         Optional<Book> optionalBook = bookRepository.findById(id);
         if(!optionalBook.isPresent()){
-            throw new RuntimeException("Book Not Found!");
+            throw new NotFoundException("Book Not Found!");
         }
         return optionalBook.get();
     }
@@ -38,19 +39,19 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public Book updateBook(Book book) {
+    public Book updateBook(Book book) throws NotFoundException {
         Optional<Book> optionalBook = bookRepository.findById(book.getId());
         if(!optionalBook.isPresent()){
-            throw new RuntimeException("Book Not Found!");
+            throw new NotFoundException("Book Not Found!");
         }
         return bookRepository.save(book);
     }
 
     @Override
-    public void deleteBook(Book book) {
+    public void deleteBook(Book book) throws NotFoundException {
         Optional<Book> optionalBook = bookRepository.findById(book.getId());
         if(!optionalBook.isPresent()){
-            throw new RuntimeException("Book Not Found!");
+            throw new NotFoundException("Book Not Found!");
         }
         bookRepository.delete(book);
     }

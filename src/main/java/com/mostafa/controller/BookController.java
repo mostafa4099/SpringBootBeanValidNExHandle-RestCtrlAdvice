@@ -1,11 +1,13 @@
 package com.mostafa.controller;
 
 import com.mostafa.entity.Book;
+import com.mostafa.excption.NotFoundException;
 import com.mostafa.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -26,23 +28,23 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public Book getBook(@PathVariable("id") long id){
+    public Book getBook(@PathVariable("id") long id) throws NotFoundException {
         return bookService.findBookById(id);
     }
 
     @PostMapping
-    public Book saveBook(@RequestBody Book book){
+    public Book saveBook(@Valid @RequestBody Book book){
         return bookService.saveBook(book);
     }
 
     @PutMapping
-    public Book updateBook(@RequestBody Book book){
+    public Book updateBook(@RequestBody Book book) throws NotFoundException {
         return bookService.updateBook(book);
     }
 
     @DeleteMapping
-    public ResponseEntity<String> deleteBook(@RequestBody Book book){
+    public String deleteBook(@RequestBody Book book) throws NotFoundException {
         bookService.deleteBook(book);
-        return ResponseEntity.ok("Deleted Successfully");
+        return "Deleted Successfully";
     }
 }

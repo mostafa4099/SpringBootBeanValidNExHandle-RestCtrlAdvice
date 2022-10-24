@@ -1,6 +1,7 @@
 package com.mostafa.service;
 
 import com.mostafa.entity.Book;
+import com.mostafa.excption.NotFoundException;
 
 import java.util.List;
 
@@ -11,8 +12,8 @@ import java.util.List;
  */
 public interface BookService {
     public List<Book> findAllBooks();
-    public Book findBookById(long id);
+    public Book findBookById(long id) throws NotFoundException;
     public Book saveBook(Book book);
-    public Book updateBook(Book book);
-    public void deleteBook(Book book);
+    public Book updateBook(Book book) throws NotFoundException;
+    public void deleteBook(Book book) throws NotFoundException;
 }
