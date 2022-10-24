@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public Map<String, String> handleNotFoundException(NotFoundException ex){
-        errorMap.put("Error", ex.getMessage());
+        errorMap.put("Info", ex.getMessage());
         return errorMap;
     }
 

@@ -11,7 +11,7 @@ import java.util.List;
  * @CreationDate 10/2/2022 12:36 PM
  */
 public interface BookService {
-    public List<Book> findAllBooks();
+    public List<Book> findAllBooks() throws NotFoundException;
     public Book findBookById(long id) throws NotFoundException;
     public Book saveBook(Book book);
     public Book updateBook(Book book) throws NotFoundException;

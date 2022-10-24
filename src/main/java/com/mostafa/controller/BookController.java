@@ -23,7 +23,7 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping
-    public List<Book> getAllBookList(){
+    public List<Book> getAllBookList() throws NotFoundException {
         return bookService.findAllBooks();
     }
 
@@ -38,7 +38,7 @@ public class BookController {
     }
 
     @PutMapping
-    public Book updateBook(@RequestBody Book book) throws NotFoundException {
+    public Book updateBook(@Valid @RequestBody Book book) throws NotFoundException {
         return bookService.updateBook(book);
     }
 

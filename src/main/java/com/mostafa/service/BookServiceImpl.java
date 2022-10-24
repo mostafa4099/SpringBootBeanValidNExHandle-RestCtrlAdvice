@@ -20,16 +20,20 @@ public class BookServiceImpl implements BookService{
     private BookRepository bookRepository;
 
     @Override
-    public List<Book> findAllBooks() {
-        return bookRepository.findAll();
+    public List<Book> findAllBooks() throws NotFoundException {
+        List<Book> bookList = bookRepository.findAll();
+
+        if(bookList.size() == 0) throw new NotFoundException("No book found");
+
+        return bookList;
     }
 
     @Override
     public Book findBookById(long id) throws NotFoundException {
         Optional<Book> optionalBook = bookRepository.findById(id);
-        if(!optionalBook.isPresent()){
-            throw new NotFoundException("Book Not Found!");
-        }
+
+        if(!optionalBook.isPresent()) throw new NotFoundException("Book Not Found!");
+
         return optionalBook.get();
     }
 
@@ -41,18 +45,18 @@ public class BookServiceImpl implements BookService{
     @Override
     public Book updateBook(Book book) throws NotFoundException {
         Optional<Book> optionalBook = bookRepository.findById(book.getId());
-        if(!optionalBook.isPresent()){
-            throw new NotFoundException("Book Not Found!");
-        }
+
+        if(!optionalBook.isPresent()) throw new NotFoundException("Book Not Found!");
+
         return bookRepository.save(book);
     }
 
     @Override
     public void deleteBook(Book book) throws NotFoundException {
         Optional<Book> optionalBook = bookRepository.findById(book.getId());
-        if(!optionalBook.isPresent()){
-            throw new NotFoundException("Book Not Found!");
-        }
+
+        if(!optionalBook.isPresent()) throw new NotFoundException("Book Not Found!");
+
         bookRepository.delete(book);
     }
 }
